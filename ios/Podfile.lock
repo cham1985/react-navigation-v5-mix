@@ -221,17 +221,17 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNCAsyncStorage (1.9.0):
+  - RNCAsyncStorage (1.12.1):
+    - React-Core
+  - RNCMaskedView (0.1.10):
     - React
-  - RNCMaskedView (0.1.6):
-    - React
-  - RNGestureHandler (1.6.0):
-    - React
-  - RNReanimated (1.7.0):
-    - React
-  - RNScreens (2.0.0-beta.8):
-    - React
-  - RNVectorIcons (6.6.0):
+  - RNGestureHandler (1.9.0):
+    - React-Core
+  - RNReanimated (1.13.2):
+    - React-Core
+  - RNScreens (2.17.0):
+    - React-Core
+  - RNVectorIcons (6.7.0):
     - React
   - Yoga (1.14.0)
 
@@ -362,7 +362,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
+  react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
   React-RCTBlob: d89293cc0236d9cb0933d85e430b0bbe81ad1d72
@@ -373,14 +373,14 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNCAsyncStorage: b16697280b08bab4b5f2f67f752d93d13a52e9ed
-  RNCMaskedView: e5b99bc191945f157adeede68da9d424462de177
-  RNGestureHandler: dde546180bf24af0b5f737c8ad04b6f3fa51609a
-  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
-  RNScreens: d56b2da8367a56bbc9840e16d968339eb0ec7e7f
-  RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
+  RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
+  RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
+  RNScreens: 23c1fbf7797261321f6db93fdcbd9913573535e4
+  RNVectorIcons: 368d6d8b8301224e5ffb6254191f4f8876c2be0d
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
 PODFILE CHECKSUM: 8f645c7740d2f59577f948b4f4b63667acfb4ebe
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3
