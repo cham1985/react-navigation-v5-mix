@@ -8,6 +8,7 @@ import SignUpScreen from './SignUpScreen';
 
 const RootStack = createStackNavigator();
 
+//登录注册路由栈
 const RootStackScreen = ({navigation}) => (
     <RootStack.Navigator headerMode='none'>
         <RootStack.Screen name="SplashScreen" component={SplashScreen}/>
