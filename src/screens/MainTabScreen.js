@@ -8,7 +8,6 @@ import ExploreScreen from './ExploreScreen';
 import ProfileScreen from './ProfileScreen';
 import CustomNavigationBar from '../components/CustomNavigationBar';
 import * as routes from '../route/routes';
-import {Appbar, Menu} from 'react-native-paper';
 const HomeStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -20,7 +19,7 @@ const MainTabScreen = () => (
       component={HomeStackScreen}
       options={{
         tabBarLabel: 'Home',
-        tabBarColor: '#009387',
+        tabBarColor: '#009312',
         tabBarIcon: ({color}) => (
           <Icon name="ios-home" color={color} size={26} />
         ),
@@ -79,7 +78,7 @@ const HomeStackScreen = ({navigation}) => (
       name="Home"
       component={HomeScreen}
       options={{
-        title: 'Overview',
+        title: 'HomeScreen',
         headerLeft: () => (
           <Icon.Button
             name="ios-menu"

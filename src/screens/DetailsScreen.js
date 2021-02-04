@@ -17,13 +17,13 @@ const DetailsScreen = ({navigation}) => {
       //todo
       console.log('DetailsScreen componentDidMount navigation=', navigation);
       setOptions({
-        // header: props => (
-        //   <CustomNavigationBar
-        //     {...props}
-        //     rightComp={<Text style={{color: colors.text}}>右按钮</Text>}
-        //   />
-        // ),
-        headerShown: false,
+        header: props => (
+          <CustomNavigationBar
+            {...props}
+            rightComp={<Text style={{color: colors.text}}>右按钮</Text>}
+          />
+        ),
+        // headerShown: false,
       });
 
       //componentWillUnmount

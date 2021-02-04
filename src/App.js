@@ -6,42 +6,72 @@
  * @flow
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useReducer} from 'react';
 import {View, ActivityIndicator} from 'react-native';
 import {
   NavigationContainer,
   DefaultTheme as NavigationDefaultTheme,
   DarkTheme as NavigationDarkTheme,
 } from '@react-navigation/native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import {
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
   DarkTheme as PaperDarkTheme,
 } from 'react-native-paper';
-import {DrawerContent} from './screens/DrawerContent';
 import MainTabScreen from './screens/MainTabScreen';
-import SupportScreen from './screens/SupportScreen';
-import SettingsScreen from './screens/SettingsScreen';
-import BookmarkScreen from './screens/BookmarkScreen';
-import {AuthContext} from './context/AuthContext';
-import RootStackScreen from './screens/RootStackScreen';
-import AsyncStorage from '@react-native-community/async-storage';
+import {ThemeContext} from './context/themeContext';
 import {Provider as StoreProvider} from 'react-redux';
+import {createStackNavigator} from '@react-navigation/stack';
+import * as routes from './route/routes';
+// import asyncStorage from './tools/asyncStorage';
+import constant from './constants/constant';
+// import {tool} from 'RNProjectTools';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
-  // const [isLoading, setIsLoading] = React.useState(true);
-  // const [userToken, setUserToken] = React.useState(null);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [initialRouteName, setInitialRouteName] = useState(
+    routes.MainTabScreen.routeName,
+  );
 
-  const [isDarkTheme, setIsDarkTheme] = React.useState(false);
-
-  const initialLoginState = {
-    isLoading: true,
-    userName: null,
-    userToken: null,
-  };
+  // const initialRootState = {
+  //   isLoading: true,
+  //   userName: null,
+  //   userToken: null,
+  // };
+  // const rootReducer = (prevState, action) => {
+  //   switch (action.type) {
+  //     case 'RETRIEVE_TOKEN':
+  //       return {
+  //         ...prevState,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //     case 'LOGIN':
+  //       return {
+  //         ...prevState,
+  //         userName: action.id,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //     case 'LOGOUT':
+  //       return {
+  //         ...prevState,
+  //         userName: null,
+  //         userToken: null,
+  //         isLoading: false,
+  //       };
+  //     case 'REGISTER':
+  //       return {
+  //         ...prevState,
+  //         userName: action.id,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //   }
+  // };
+  // const [rootState, dispatch] = useReducer(rootReducer, initialRootState);
 
   /**
    * https://callstack.github.io/react-native-paper/theming-with-react-navigation.html
@@ -72,74 +102,9 @@ const App = () => {
 
   const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
 
-  const loginReducer = (prevState, action) => {
-    switch (action.type) {
-      case 'RETRIEVE_TOKEN':
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case 'LOGIN':
-        return {
-          ...prevState,
-          userName: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case 'LOGOUT':
-        return {
-          ...prevState,
-          userName: null,
-          userToken: null,
-          isLoading: false,
-        };
-      case 'REGISTER':
-        return {
-          ...prevState,
-          userName: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-    }
-  };
-
-  const [loginState, dispatch] = React.useReducer(
-    loginReducer,
-    initialLoginState,
-  );
-
-  // 登录模块,不会因为当前控件重绘而重新创建
-  const authContext = React.useMemo(
+  // 切换主题模块,不会因为当前控件重绘而重新创建
+  const themeContext = React.useMemo(
     () => ({
-      signIn: async foundUser => {
-        // setUserToken('fgkj');
-        // setIsLoading(false);
-        const userToken = String(foundUser[0].userToken);
-        const userName = foundUser[0].username;
-
-        try {
-          await AsyncStorage.setItem('userToken', userToken);
-        } catch (e) {
-          console.log(e);
-        }
-        // console.log('user token: ', userToken);
-        dispatch({type: 'LOGIN', id: userName, token: userToken});
-      },
-      signOut: async () => {
-        // setUserToken(null);
-        // setIsLoading(false);
-        try {
-          await AsyncStorage.removeItem('userToken');
-        } catch (e) {
-          console.log(e);
-        }
-        dispatch({type: 'LOGOUT'});
-      },
-      signUp: () => {
-        // setUserToken('fgkj');
-        // setIsLoading(false);
-      },
       //切换 正常 | 暗黑 模式的方法
       toggleTheme: () => {
         console.log('App.js toggleTheme 切换了主题');
@@ -150,52 +115,71 @@ const App = () => {
   );
 
   useEffect(() => {
-    setTimeout(async () => {
-      // setIsLoading(false);
-      let userToken;
-      userToken = null;
-      try {
-        userToken = await AsyncStorage.getItem('userToken');
-      } catch (e) {
-        console.log(e);
-      }
-      // console.log('user token: ', userToken);
-      dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
-    }, 1000);
+    console.log('App.js componentDidMount');
+    // setTimeout(async () => {
+    //   const [err_initialRouteName, data_initialRouteName] = await tool.to(
+    //     asyncStorage.getItem(constant.initialRouteName),
+    //   );
+    //   console.log(
+    //     'App.js componentDidMount data_initialRouteName=',
+    //     data_initialRouteName,
+    //     ' err_initialRouteName=',
+    //     err_initialRouteName,
+    //   );
+    //   if (data_initialRouteName) {
+    //   }
+    // }, 1000);
   }, []);
 
-  if (loginState.isLoading) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
-  return (
+  return !initialRouteName ? (
+    // 加载各种启动时需要的缓存时 ,先显示全屏菊花
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'red',
+      }}>
+      <ActivityIndicator size="large" />
+    </View>
+  ) : (
     <PaperProvider theme={theme}>
       {/*https://callstack.github.io/react-native-paper/theming-with-react-navigation.html
         Context Provider should be imported also at the entry point, as we want it to wrap the whole app, for the theme values to be accessible at
          every component that we have.
         上下文提供者也应该在入口点导入，因为我们希望它包装整个应用程序，以便在我们拥有的每个组件上都可以访问主题值。
         Context is wired into the local state of our main component, so that its values could be propagated throughout the entire application 上下文被连接到我们的主要组件的本地状态中，因此它的值可以在整个应用程序中传播
-        eg: 在 SignInScreen.js 可以 调 signIn 方法: const { signIn } = React.useContext(AuthContext);
+        eg: 在 DrawerContent.js 可以 调 toggleTheme 方法: const { toggleTheme } = React.useContext(ThemeContext);
         */}
-      <AuthContext.Provider value={authContext}>
+      <ThemeContext.Provider value={themeContext}>
         <NavigationContainer theme={theme}>
-          {loginState.userToken !== null ? ( //已登录路由栈
-            <Drawer.Navigator
-              drawerContent={props => <DrawerContent {...props} />}>
-              <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-              <Drawer.Screen name="SupportScreen" component={SupportScreen} />
-              <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
-              <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />
-            </Drawer.Navigator>
-          ) : (
-            //未登录路由栈
-            <RootStackScreen />
-          )}
+          {/*{loginState.userToken !== null ? ( //已登录路由栈*/}
+          {/*  <Drawer.Navigator 暂时隐藏  @react-navigation/drawer 的使用,以后要用再打开*/}
+          {/*    minSwipeDistance={0}*/}
+          {/*    drawerContent={props => <DrawerContent {...props} />}>*/}
+          {/*    <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />*/}
+          {/*    <Drawer.Screen name="SupportScreen" component={SupportScreen} />*/}
+          {/*    <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />*/}
+          {/*    <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />*/}
+          {/*  </Drawer.Navigator>*/}
+          {/*) : (*/}
+          {/*  //未登录路由栈*/}
+          {/*  <RootStackScreen />*/}
+          {/*)}*/}
+          <Stack.Navigator initialRouteName={initialRouteName}>
+            <Stack.Screen
+              name={routes.MainTabScreen.routeName}
+              component={MainTabScreen}
+              options={({route}) => {
+                console.log('App.js MainTabScreen route=', route);
+                return {
+                  headerShown: false,
+                };
+              }}
+            />
+          </Stack.Navigator>
         </NavigationContainer>
-      </AuthContext.Provider>
+      </ThemeContext.Provider>
     </PaperProvider>
   );
 };

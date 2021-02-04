@@ -6,6 +6,10 @@ export const DetailsScreen = {
   routeName: 'DetailsScreen',
   screenTitle: '详情页',
 };
+export const MainTabScreen = {
+  routeName: 'MainTabScreen',
+  screenTitle: '',
+};
 
 // export function getRoute(name) {
 //   return name;
